@@ -111,17 +111,17 @@ class ExternalPortage(ExternPackager):
 
     def install(self, pkgname):
         """
-        emerge =pkgname-ver
+        emerge >=pkgname-ver
         """
         ver = self.get_available_version(pkgname)
-        return self._run_cmd('='+pkgname+'-'+ver, '')
+        return self._run_cmd('>='+pkgname+'-'+ver, '')
 
     def update(self, pkgname):
         """
-        emerge --update =pkgname-ver
+        emerge --update >=pkgname-ver
         """
         ver = self.get_available_version(pkgname)
-        return self._run_cmd('='+pkgname+'-'+ver,'--update')
+        return self._run_cmd('>='+pkgname+'-'+ver,'--update')
 
     def _run_cmd(self, pkgname, cmd):
         try:

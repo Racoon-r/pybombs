@@ -60,6 +60,8 @@ class AutoConfigurator(object):
         from pybombs.utils import sysutils
         if sysutils.which('sudo'):
             return ['sudo', '-H']
+        elif sysutils.which('doas'):
+            return ['doas']
         if sysutils.which('pkexec'):
             return ['pkexec']
         return ''

@@ -34,6 +34,7 @@ except ImportError:
     from queue import Queue, Empty  # Py3k
 from pybombs.pb_logging import logger
 from pybombs.pb_exception import PBException
+from pybombs.utils import sysutils
 
 READ_TIMEOUT = 0.1 # s
 
@@ -137,14 +138,21 @@ def _process_thread(event, args, kwargs):
     """
     def elevate_command(args, elevate_pre_args):
         " Modify the command to run with elevated privileges. "
-        if isinstance(elevate_pre_args, str):
-            elevate_pre_args = [elevate_pre_args,]
-        if len(elevate_pre_args[0].strip()) == 0:
-            elevate_pre_args = []
+        for cmd in elevate_pre_args:
+            if sysutils.which(cmd[0]) is not None:
+                pre_args = cmd
+                break
+            else:
+                pass
+        if isinstance(pre_args, str):
+            pre_args = [pre_args,]
+        if len(pre_args[0].strip()) == 0:
+            pre_args = []
         if kwargs.get('shell', False) and isinstance(args, str):
-            args = ' '.join(elevate_pre_args) + args
+            args = ' '.join(pre_args) + args
         else:
-            args = elevate_pre_args + args
+            args = pre_args + args
+        print(args)
         return args
     def pretty_print_cmd(args):
         " Return pretty-printed version of the command. "
