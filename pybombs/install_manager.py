@@ -129,13 +129,13 @@ class InstallManager(object):
                 continue
             if self.pm.installed(pkg):
                 self.log.info("Updating package: {0}".format(pkg))
-                if not self.pm.update(pkg, install_type="source", verify=verify):
+                if not self.pm.update(pkg, install_type="any", verify=verify):
                     self.log.error("Error updating package {0}. Aborting.".format(pkg))
                     return False
                 self.log.info("Update successful.")
             else:
                 self.log.info("Installing package: {0}".format(pkg))
-                if not self.pm.install(pkg, install_type="source", static=static, verify=verify):
+                if not self.pm.install(pkg, install_type="any", static=static, verify=verify):
                     self.log.error("Error installing package {0}. Aborting.".format(pkg))
                     return False
                 self.log.info("Installation successful.")

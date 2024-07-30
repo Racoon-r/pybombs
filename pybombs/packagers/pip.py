@@ -61,10 +61,13 @@ class ExternalPip(ExternPackager):
     def get_available_version(self, pkgname):
         """
         See if 'pip search' finds our package.
+        Update: 'pip search' does not work anymore.
+        An alternative is 'poetry search'.
         """
+        cmd = "poetry"
         try:
             output_match = subproc.match_output(
-                [self.cmd, "search", pkgname],
+                [cmd, "search", pkgname],
                 r'^\b{pkg}\b'.format(pkg=pkgname),
             )
             return bool(output_match)
@@ -124,14 +127,14 @@ class ExternalPip(ExternPackager):
     def _run_pip_install(self, pkgname, update=False):
         """
         Run pip install [--upgrade]
-        """
+        """ 
         try:
             command = [self.cmd, "install"]
             if update:
                 command.append('--upgrade')
             command.append(pkgname)
             self.log.debug("Calling `{cmd}'".format(cmd=" ".join(command)))
-            subproc.monitor_process(command, elevate=True)
+            subproc.monitor_process(command, elevate=False)
             self.load_install_cache()
             return True
         except Exception as ex:
@@ -145,7 +148,6 @@ class Pip(ExternCmdPackagerBase):
     """
     name = 'pip'
     pkgtype = 'pip'
-
     def __init__(self):
         ExternCmdPackagerBase.__init__(self)
         self.packager = ExternalPip(self.log)

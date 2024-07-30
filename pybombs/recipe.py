@@ -265,9 +265,13 @@ class Recipe(object):
         self.log.trace("Loaded recipe - {0}".format(self.id))
 
     def __str__(self):
-        from ruamel import yaml
+        import yaml
+        #from ruamel.yaml import YAML
+        #yaml = YAML(typ='unsafe', pure=True)
+        #yaml.default_flow_style = False
         out = "Recipe: {id}\n".format(id=str(self.id))
-        out += yaml.dump(self._data, default_flow_style=False)
+        #out += yaml.dump(self._data)
+        out += yaml.dump(self._data)
         return out
 
     def get_dict(self):

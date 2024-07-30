@@ -86,7 +86,7 @@ class Source(PackagerBase):
         get_state = lambda: (self.inventory.get_state(recipe.id) or 0)
         set_state = lambda state: self.inventory.set_state(recipe.id, state) or self.inventory.save()
         if not hasattr(recipe, 'source') or len(recipe.source) == 0:
-            self.log.warn("Cannot find a source URI for package {0}".format(recipe.id))
+            self.log.warning("Cannot find a source URI for package {0}".format(recipe.id))
             return False
         from pybombs.fetcher import Fetcher
         try:
@@ -226,7 +226,7 @@ class Source(PackagerBase):
                     shutil.rmtree(builddir)
                     os.mkdir(builddir)
                 elif warn_if_builddir_exists:
-                    self.log.warn("Build dir already exists: {0}".format(builddir))
+                    self.log.warning("Build dir already exists: {0}".format(builddir))
             else:
                 if fail_if_builddir_missing:
                     raise PBException("Can't update package {0}, build directory seems to be missing.".format(recipe.id))

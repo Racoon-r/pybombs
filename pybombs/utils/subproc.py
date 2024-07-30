@@ -152,7 +152,6 @@ def _process_thread(event, args, kwargs):
             args = ' '.join(pre_args) + args
         else:
             args = pre_args + args
-        print(args)
         return args
     def pretty_print_cmd(args):
         " Return pretty-printed version of the command. "

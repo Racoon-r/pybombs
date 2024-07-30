@@ -176,6 +176,7 @@ class ExternCmdPackagerBase(PackagerBase):
         Return type same as 'exists()'.
         """
         available_version = self.packager.get_available_version(pkg_name)
+        print(self.packager.get_available_version)
         if available_version is True:
             return True
         if available_version is False \

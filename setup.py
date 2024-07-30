@@ -98,6 +98,8 @@ deps = [
     "six",
     "future",
     "ruamel.yaml >= 0.15.0",
+    "poetry",
+    "cffi==1.17.0rc1",
 ]
 
 setup(
